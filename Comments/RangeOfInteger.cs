@@ -2,7 +2,7 @@
 
 public record Range(int LowerBound, int UpperBound);
 
-public class RangeOfInteger
+public static class RangeOfInteger
 {
     public static int SumSquares(Range range)
     {

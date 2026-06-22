@@ -10,8 +10,6 @@ public class WeatherReport
     {
         foreach (Forecast forecast in forecasts)
         {
-            string temperature = forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture);
-
             string label = forecast.Period switch
             {
                 Period.Morning => "Morning",
@@ -21,7 +19,7 @@ public class WeatherReport
                 _ => "Unknown",
             };
 
-            string line = label + ": " + temperature + "°C, "
+            string line = label + ": " + forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C, "
                           + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
             output.Add(line);
         }

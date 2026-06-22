@@ -10,19 +10,7 @@ public class ShippingNoteGeneratorTest
     [Test]
     public void ShouldGenerateShippingNoteWithAllInputFields()
     {
-        string result = shippingNoteGenerator.GenerateShippingNote(
-            "Jane",
-            "Doe",
-
-            "12 Baker Street",
-            "Flat 4B",
-            "London",
-            "NW1 6XE",
-            "UK",
-
-            "ORD-123",
-            "Wireless Headphones",
-            2
+        string result = shippingNoteGenerator.GenerateShippingNote(new Customer("Jane", "Doe", "12 Baker Street", "Flat 4B", "London", "NW1 6XE", "UK"), new Order("ORD-123", "Wireless Headphones", 2)
         );
 
         Assert.That(result, Does.Contain("Order: ORD-123"));
@@ -40,19 +28,7 @@ public class ShippingNoteGeneratorTest
     [Test]
     public void ShouldIncludeCustomerFullName()
     {
-        string result = shippingNoteGenerator.GenerateShippingNote(
-            "John",
-            "Smith",
-
-            "1 High Street",
-            "Apt 2",
-            "Manchester",
-            "M1 2AB",
-            "UK",
-
-            "ORD-999",
-            "Laptop",
-            1
+        string result = shippingNoteGenerator.GenerateShippingNote(new Customer("John", "Smith", "1 High Street", "Apt 2", "Manchester", "M1 2AB", "UK"), new Order("ORD-999", "Laptop", 1)
         );
 
         Assert.That(result, Does.Contain("Customer: John Smith"));
@@ -61,19 +37,7 @@ public class ShippingNoteGeneratorTest
     [Test]
     public void ShouldIncludeOrderIdAndItemDetails()
     {
-        string result = shippingNoteGenerator.GenerateShippingNote(
-            "Alice",
-            "Brown",
-
-            "50 King Street",
-            "Unit 3",
-            "Birmingham",
-            "B1 1AA",
-            "UK",
-
-            "ORD-555",
-            "Tablet",
-            5
+        string result = shippingNoteGenerator.GenerateShippingNote(new Customer("Alice", "Brown", "50 King Street", "Unit 3", "Birmingham", "B1 1AA", "UK"), new Order("ORD-555", "Tablet", 5)
         );
 
         Assert.That(result, Does.Contain("Order: ORD-555"));
@@ -84,19 +48,7 @@ public class ShippingNoteGeneratorTest
     [Test]
     public void ShouldIncludeFullAddressAcrossAllFields()
     {
-        string result = shippingNoteGenerator.GenerateShippingNote(
-            "Emma",
-            "Jones",
-
-            "99 High Road",
-            "Floor 2",
-            "Leeds",
-            "LS1 4AB",
-            "UK",
-
-            "ORD-777",
-            "Monitor",
-            3
+        string result = shippingNoteGenerator.GenerateShippingNote(new Customer("Emma", "Jones", "99 High Road", "Floor 2", "Leeds", "LS1 4AB", "UK"), new Order("ORD-777", "Monitor", 3)
         );
 
         Assert.That(result, Does.Contain("99 High Road"));
@@ -109,19 +61,7 @@ public class ShippingNoteGeneratorTest
     [Test]
     public void ShouldIncludeQuantityCorrectly()
     {
-        string result = shippingNoteGenerator.GenerateShippingNote(
-            "Tom",
-            "White",
-
-            "10 Market Street",
-            "",
-            "Liverpool",
-            "L1 8JQ",
-            "UK",
-
-            "ORD-321",
-            "Keyboard",
-            10
+        string result = shippingNoteGenerator.GenerateShippingNote(new Customer("Tom", "White", "10 Market Street", "", "Liverpool", "L1 8JQ", "UK"), new Order("ORD-321", "Keyboard", 10)
         );
 
         Assert.That(result, Does.Contain("Quantity: 10"));

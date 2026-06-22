@@ -9,29 +9,29 @@ public enum Shipping
     Overnight
 }
 
-public interface IPricingStrategy
+public interface IShippingRate
 {
     double Calculate(double weight, double distance);
 }
 
-public class StandardPricing : IPricingStrategy
+public class StandardRate : IShippingRate
 {
     public double Calculate(double weight, double distance)
         => weight * 0.5;
 }
 
-public class ExpressPricing : IPricingStrategy
+public class ExpressRate : IShippingRate
 {
     public double Calculate(double weight, double distance)
        => weight * 0.8 + distance * 0.1;
 }
 
-public class OvernightPricing : IPricingStrategy
+public class OvernightRate : IShippingRate
 {
     public double Calculate(double weight, double distance)
         => weight * 1.2 + 25;
 }
-public class InternationalPricing : IPricingStrategy
+public class InternationalRate : IShippingRate
 {
     public double Calculate(double weight, double distance)
         => weight * 1.5;
@@ -40,21 +40,21 @@ public class InternationalPricing : IPricingStrategy
 
 public static class ShippingRateFactory
 {
-    public static IPricingStrategy Create(Shipping strategy) => strategy switch
+    public static IShippingRate Create(Shipping strategy) => strategy switch
     {
-        Shipping.Standard => new StandardPricing(),
-        Shipping.International => new InternationalPricing(),
-        Shipping.Express => new ExpressPricing(),
-        Shipping.Overnight => new OvernightPricing(),
+        Shipping.Standard => new StandardRate(),
+        Shipping.International => new InternationalRate(),
+        Shipping.Express => new ExpressRate(),
+        Shipping.Overnight => new OvernightRate(),
         _ => throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null)
     };
     
-    public static IPricingStrategy CreateForType(string shippingType) => shippingType switch
+    public static IShippingRate CreateForType(string shippingType) => shippingType switch
     {
-        "STANDARD" => new StandardPricing(),
-        "EXPRESS" => new ExpressPricing(),
-        "OVERNIGHT" => new OvernightPricing(),
-        "INTERNATIONAL" => new InternationalPricing(),
+        "STANDARD" => new StandardRate(),
+        "EXPRESS" => new ExpressRate(),
+        "OVERNIGHT" => new OvernightRate(),
+        "INTERNATIONAL" => new InternationalRate(),
         _ => throw new Exception($"Unknown shipping type: {shippingType}")
     };
 }

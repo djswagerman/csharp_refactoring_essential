@@ -27,22 +27,22 @@ public class ShippingCalculator
     {
         try
         {
-            var order = _orderClient.getOrderData(orderId);
+            var orderData = _orderClient.getOrderData(orderId);
 
-            switch (order.ShippingType)
+            switch (orderData.ShippingType)
             {
                 case "STANDARD":
-                    return order.WeightKg * 0.5;
+                    return orderData.WeightKg * 0.5;
 
                 case "EXPRESS":
-                    return order.WeightKg * 0.8
-                           + order.DistanceKm * 0.1;
+                    return orderData.WeightKg * 0.8
+                           + orderData.DistanceKm * 0.1;
 
                 case "OVERNIGHT":
-                    return order.WeightKg * 1.2 + 25;
+                    return orderData.WeightKg * 1.2 + 25;
 
                 default:
-                    throw new Exception($"Unknown shipping type: {order.ShippingType}");
+                    throw new Exception($"Unknown shipping type: {orderData.ShippingType}");
             }
         }
         catch (Exception e)

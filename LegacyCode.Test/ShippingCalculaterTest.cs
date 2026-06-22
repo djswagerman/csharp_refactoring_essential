@@ -1,12 +1,12 @@
 using System.ComponentModel.Design;
+using System.Text.Json.Serialization;
 
 namespace LegacyCode.Test;
-using System.Text.Json.Serialization;
 
 public class OrderClientTest
 {
     [Fact]
-    private void CanGetOrder()
+    public void CanGetOrder()
     {
         var orderClient = new OrderClient(new HttpClient());
         var order1001 = orderClient.getOrderData(1001);
@@ -16,47 +16,36 @@ public class OrderClientTest
 
 public class CalculatorTests
 {
-    private readonly PricingStrategyTest _pricingStrategyTest = new PricingStrategyTest();
+    private readonly ShippingCalculator calculator;
+
+    public CalculatorTests()
+    {
+        calculator = new ShippingCalculator();
+    }
 
     [Fact]
     public void ShippingCalculator_CanBeInstantiated()
     {
-        // Arrange & Act
-        var calculator = new ShippingCalculator();
-
-        // Assert
         Assert.NotNull(calculator);
     }
 
-    [Fact]
-    public void ShippingCalculator_CalculateStandardPricing()
+    [Theory]
+    [InlineData("STANDARD", 5, 120, 5 * 0.5)]
+    [InlineData("EXPRESS", 5, 120, 5 * 0.8 + 120 * 0.1)]
+    [InlineData("OVERNIGHT", 5, 120, 5 * 1.2 + 25)]
+    [InlineData("INTERNATIONAL", 5, 120, 5 * 1.5)]
+    public void ShippingCalculator_CalculatePricing(
+        string shippingType, double weightKg, double distanceKm, double expectedPricing)
     {
-        var calculator = new ShippingCalculator();
-        var orderData = new OrderData();
-            
-        orderData.ShippingType = "STANDARD";
-        orderData.WeightKg = 5;
-        orderData.DistanceKm = 120;
-        
-        var expectedPricing = orderData.WeightKg * 0.5;
+        var orderData = new OrderData
+        {
+            ShippingType = shippingType,
+            WeightKg = weightKg,
+            DistanceKm = distanceKm
+        };
+
         var calculatedPricing = calculator.CalculateShipping(orderData);
-        
-        Assert.Equal(expectedPricing, calculatedPricing);
-    }
-    
-    [Fact]
-    public void ShippingCalculator_CalculateExpressPricing()
-    {
-        var calculator = new ShippingCalculator();
-        var orderData = new OrderData();
-            
-        orderData.ShippingType = "EXPRESS";
-        orderData.WeightKg = 5;
-        orderData.DistanceKm = 120;
-        
-        var expectedPricing = orderData.WeightKg * 0.8 + orderData.DistanceKm * 0.1;
-        var calculatedPricing = calculator.CalculateShipping(orderData);
-        
+
         Assert.Equal(expectedPricing, calculatedPricing);
     }
 }

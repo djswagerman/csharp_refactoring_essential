@@ -3,23 +3,16 @@
 using System;
 using System.Net.Http;
 using System.Text.Json.Serialization;
-
 public class ShippingCalculator
 {
     private readonly HttpClient _httpClient = new HttpClient();
     private readonly OrderClient _orderClient;
 
-    public ShippingCalculator()
+    public double CalculateShipping(OrderData orderData)
     {
-        _orderClient = new OrderClient(_httpClient);
-    }
-
-    public double CalculateShipping(int orderId)
-    {
+        var orderId = orderData.OrderId;
         try
         {
-            var orderData = _orderClient.getOrderData(orderId);
-
             switch (orderData.ShippingType)
             {
                 case "STANDARD":

@@ -23,7 +23,7 @@ public class ShippingApp
 
         try
         {
-            double cost = calculator.CalculateShipping(orderId);
+            double cost = calculator.CalculateShipping(new InClassName(orderId));
 
             Console.WriteLine($"OrderData ID: {orderId}");
             Console.WriteLine($"Shipping cost: {cost}");

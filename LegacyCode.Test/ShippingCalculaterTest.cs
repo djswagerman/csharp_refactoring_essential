@@ -1,7 +1,18 @@
 namespace LegacyCode.Test;
 using System.Text.Json.Serialization;
 
-public class LegacyCalculatorTests
+public class OrderClientTest
+{
+    [Fact]
+    private void CanGetOrder()
+    {
+        var orderClient = new OrderClient(new HttpClient());
+        var order1001 = orderClient.getOrderData(1001);
+        Assert.NotNull(order1001);
+    }
+}
+
+public class CalculatorTests
 {
     [Fact]
     public void ShippingCalculator_CanBeInstantiated()
@@ -11,13 +22,5 @@ public class LegacyCalculatorTests
 
         // Assert
         Assert.NotNull(calculator);
-    }
-    
-    [Fact] void CanGetOrder()
-    {
-        var orderClient = new OrderClient(new HttpClient());
-        var order1001 = orderClient.getOrderData(1001);
-        
-        var calculator = new ShippingCalculator();
     }
 }

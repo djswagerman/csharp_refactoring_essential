@@ -25,8 +25,8 @@ public class ShippingApp
             var orderData = orderClient.getOrderData(orderId);
             if (orderData != null)
             {
-                var pricing = PricingStrategyFactory.CreateForShippingType(orderData.ShippingType);
-                double cost = pricing.CalculatePrice(orderData.WeightKg, orderData.DistanceKm);
+                var shippingRate = ShippingRateFactory.CreateForType(orderData.ShippingType);
+                double cost = shippingRate.Calculate(orderData.WeightKg, orderData.DistanceKm);
 
                 Console.WriteLine($"OrderData ID: {orderId}");
                 Console.WriteLine($"Shipping cost: {cost}");

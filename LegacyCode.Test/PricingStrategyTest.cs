@@ -10,8 +10,8 @@ public class PricingStrategyTest
     public void ShippingCalculator_PricingStrategy(
         string shippingType, double weight, double distance, double expectedPricing)
     {
-        var pricing = PricingStrategyFactory.CreateForShippingType(shippingType);
-        var calculatedPricing = pricing.CalculatePrice(weight, distance);
+        var pricing = ShippingRateFactory.CreateForType(shippingType);
+        var calculatedPricing = pricing.Calculate(weight, distance);
 
         Assert.Equal(expectedPricing, calculatedPricing);
     }

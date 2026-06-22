@@ -19,15 +19,14 @@ public class ShippingApp
             return;
         }
 
-        var calculator = new ShippingCalculator();
-
         try
         {
             var orderClient = new OrderClient(new HttpClient());
             var orderData = orderClient.getOrderData(orderId);
             if (orderData != null)
             {
-                double cost = calculator.CalculateShipping(orderData);
+                var pricing = PricingStrategyFactory.CreateForShippingType(orderData.ShippingType);
+                double cost = pricing.CalculatePrice(orderData.WeightKg, orderData.DistanceKm);
 
                 Console.WriteLine($"OrderData ID: {orderId}");
                 Console.WriteLine($"Shipping cost: {cost}");

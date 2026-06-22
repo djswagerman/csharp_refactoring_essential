@@ -10,14 +10,19 @@ public class WeatherReport
     {
         foreach (Forecast forecast in forecasts)
         {
-            string periodLabel = forecast.GetPeriodLabel();
-            string temperature = forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C";
-            string condition = forecast.GetCondition();
-            string windSpeed = "wind " + forecast.GetWindSpeed().ToString("0", CultureInfo.InvariantCulture) + "km/h";;
-            
-            string line =  periodLabel + ": " + temperature + ", " + condition + ", " + windSpeed;
-            output.Add(line);
+            FormatForecast(output, forecast);
         }
+    }
+
+    private static void FormatForecast(List<string> output, Forecast forecast)
+    {
+        string periodLabel = forecast.GetPeriodLabel();
+        string temperature = forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C";
+        string condition = forecast.GetCondition();
+        string windSpeed = "wind " + forecast.GetWindSpeed().ToString("0", CultureInfo.InvariantCulture) + "km/h";;
+            
+        string line =  periodLabel + ": " + temperature + ", " + condition + ", " + windSpeed;
+        output.Add(line);
     }
 }
 

@@ -3,7 +3,7 @@
 using NUnit.Framework;
 
 [TestFixture]
-public class X1Test
+public class RangeOfIntegerTest
 {
     [Test]
     public void T1()
@@ -19,7 +19,7 @@ public class X1Test
         }
 
         var range = new Range(lowerBound, upperBound);
-        int actualSumOfSquares = X1.SumOfSquares(range);
+        int actualSumOfSquares = RangeOfInteger.SumSquares(range);
 
         Assert.That(actualSumOfSquares, Is.EqualTo(expectedSumOfSquares));
     }

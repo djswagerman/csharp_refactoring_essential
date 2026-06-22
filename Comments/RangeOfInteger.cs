@@ -2,9 +2,9 @@
 
 public record Range(int LowerBound, int UpperBound);
 
-public class X1
+public class RangeOfInteger
 {
-    public static int SumOfSquares(Range range)
+    public static int SumSquares(Range range)
     {
         int accumulatedSum = 0;
 

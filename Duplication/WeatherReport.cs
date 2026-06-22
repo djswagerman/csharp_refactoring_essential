@@ -10,9 +10,7 @@ public class WeatherReport
     {
         foreach (Forecast forecast in forecasts)
         {
-            var label = GetPeriodLabel(forecast);
-
-            string line = label + ": " + forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C, "
+            string line =  GetPeriodLabel(forecast) + ": " + forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C, "
                           + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
             output.Add(line);
         }

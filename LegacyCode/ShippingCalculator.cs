@@ -6,7 +6,6 @@ using System.Text.Json.Serialization;
 public class ShippingCalculator
 {
     private readonly HttpClient _httpClient = new HttpClient();
-    private readonly OrderClient _orderClient;
 
     public double CalculateShipping(OrderData orderData)
     {

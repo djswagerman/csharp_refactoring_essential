@@ -12,45 +12,30 @@ public class WeatherReport
         {
             string temperature = forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture);
 
-            if (forecast.IsMorning())
+            string label = forecast.Period switch
             {
-                string line = "Morning: " + temperature + "°C, "
-                              + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
-                output.Add(line);
-            }
+                Period.Morning => "Morning",
+                Period.Afternoon => "Afternoon",
+                Period.Evening => "Evening",
+                Period.Night => "Night",
+                _ => "Unknown",
+            };
 
-            if (forecast.IsAfternoon())
-            {
-                string line = "Afternoon: " + temperature + "°C, "
-                              + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
-                output.Add(line);
-            }
-
-            if (forecast.IsEvening())
-            {
-                string line = "Evening: " + temperature + "°C, "
-                              + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
-                output.Add(line);
-            }
-
-            if (forecast.IsNight())
-            {
-                string line = "Night: " + temperature + "°C, "
-                              + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
-                output.Add(line);
-            }
+            string line = label + ": " + temperature + "°C, "
+                          + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
+            output.Add(line);
         }
     }
 }
 
 public class Forecast
 {
-    private readonly string period; // "morning", "afternoon", "evening", "night"
+    private readonly Period period;
     private readonly double temperature;
     private readonly string condition;
     private readonly int windSpeed;
 
-    public Forecast(string period, double temperature, string condition, int windSpeed)
+    public Forecast(Period period, double temperature, string condition, int windSpeed)
     {
         this.period = period;
         this.temperature = temperature;
@@ -73,23 +58,13 @@ public class Forecast
         return windSpeed;
     }
 
-    public bool IsMorning()
-    {
-        return period == "morning";
-    }
+    public Period Period => period;
+}
 
-    public bool IsAfternoon()
-    {
-        return period == "afternoon";
-    }
-
-    public bool IsEvening()
-    {
-        return period == "evening";
-    }
-
-    public bool IsNight()
-    {
-        return period == "night";
-    }
+public enum Period
+{
+    Morning,
+    Afternoon,
+    Evening,
+    Night
 }

@@ -11,7 +11,7 @@ public class WeatherReportTest
     {
         var report = new WeatherReport();
 
-        var forecast = new Forecast("morning", 12.5, "Cloudy", 10);
+        var forecast = new Forecast(Period.Morning, 12.5, "Cloudy", 10);
 
         var output = new List<string>();
         report.FormatDailyReport(new List<Forecast> { forecast }, output);
@@ -28,7 +28,7 @@ public class WeatherReportTest
     {
         var report = new WeatherReport();
 
-        var forecast = new Forecast("afternoon", 8.0, "Rain", 20);
+        var forecast = new Forecast(Period.Afternoon, 8.0, "Rain", 20);
 
         var output = new List<string>();
         report.FormatDailyReport(new List<Forecast> { forecast }, output);
@@ -45,7 +45,7 @@ public class WeatherReportTest
     {
         var report = new WeatherReport();
 
-        var forecast = new Forecast("evening", 8.0, "Rain", 20);
+        var forecast = new Forecast(Period.Evening, 8.0, "Rain", 20);
 
         var output = new List<string>();
         report.FormatDailyReport(new List<Forecast> { forecast }, output);
@@ -64,8 +64,8 @@ public class WeatherReportTest
 
         var forecasts = new List<Forecast>
         {
-            new Forecast("morning", 10.0, "Sunny", 5),
-            new Forecast("night", 3.0, "Clear", 2)
+            new Forecast(Period.Morning, 10.0, "Sunny", 5),
+            new Forecast(Period.Night, 3.0, "Clear", 2)
         };
 
         var output = new List<string>();

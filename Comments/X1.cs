@@ -8,16 +8,9 @@ public class X1
 
         for (int i = lowerBound; i <= upperBound; i++)
         {
-            accumulatedSum += Square(i);
+            accumulatedSum += i * i;
         }
 
-        // Return accumulated sum
         return accumulatedSum;
-    }
-
-    static int Square(int k)
-    {
-        // Return square of input
-        return k * k;
     }
 }

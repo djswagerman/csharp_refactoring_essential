@@ -27,6 +27,8 @@ public class Address
                                       + country;
         return address;
     }
+
+    public string Addres => formatAddress (AddressLine1, AddressLine2, City, Postcode, Country);
 }
 
 public class Customer
@@ -43,9 +45,9 @@ public class Customer
     public string CustomerFirstName { get; }
     public string CustomerLastName { get; }
 
-    public Address Address
+    public string Address
     {
-        get { return _address; }
+        get { return _address.Addres; }
     }
 }
 
@@ -61,12 +63,10 @@ public class ShippingNoteGenerator
     public string GenerateShippingNote(Customer customer, Order order
     )
     {
-        var address = Address.formatAddress(customer.Address.AddressLine1, customer.Address.AddressLine2, customer.Address.City, customer.Address.Postcode, customer.Address.Country);
-
         return "SHIPPING NOTE\n"
                + "Order: " + order.OrderId + "\n"
                + "Customer: " + (customer.CustomerFirstName + " " + customer.CustomerLastName) + "\n"
-               + "Ship To: " + address + "\n"
+               + "Ship To: " + customer.Address + "\n"
                + "Item: " + order.ItemDescription + "\n"
                + "Quantity: " + order.Quantity;
     }

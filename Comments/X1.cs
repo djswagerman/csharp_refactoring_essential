@@ -2,12 +2,12 @@
 
 public class X1
 {
-    public static int SumOfSquares(int q, int z)
+    public static int SumOfSquares(int lowerBound, int upperBound)
     {
         int p = 0;
 
         // Iterate from lower bound (q) to upper bound (z)
-        for (int i = q; i <= z; i++)
+        for (int i = lowerBound; i <= upperBound; i++)
         {
             p += Square(i);
         }

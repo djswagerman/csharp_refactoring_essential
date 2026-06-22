@@ -22,30 +22,8 @@ public class ShippingCalculator
     {
         try
         {
-            var url = $"https://codemanship.co.uk/api/orders.php?orderId={orderId}";
+            var order = getOrderData(orderId);
 
-            var response = _httpClient
-                .GetAsync(url)
-                .GetAwaiter()
-                .GetResult();
-
-            response.EnsureSuccessStatusCode();
-
-            var json = response.Content
-                .ReadAsStringAsync()
-                .GetAwaiter()
-                .GetResult();
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            
-            var order = JsonSerializer.Deserialize<Order>(json, options);
-
-            if (order == null)
-                throw new Exception("Failed to deserialize order");
-            
             switch (order.ShippingType)
             {
                 case "STANDARD":
@@ -67,6 +45,34 @@ public class ShippingCalculator
             Console.WriteLine(e);
             return -1;
         }
+    }
+
+    private Order? getOrderData(int orderId)
+    {
+        var url = $"https://codemanship.co.uk/api/orders.php?orderId={orderId}";
+
+        var response = _httpClient
+            .GetAsync(url)
+            .GetAwaiter()
+            .GetResult();
+
+        response.EnsureSuccessStatusCode();
+
+        var json = response.Content
+            .ReadAsStringAsync()
+            .GetAwaiter()
+            .GetResult();
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+            
+        var order = JsonSerializer.Deserialize<Order>(json, options);
+
+        if (order == null)
+            throw new Exception("Failed to deserialize order");
+        return order;
     }
 }
 

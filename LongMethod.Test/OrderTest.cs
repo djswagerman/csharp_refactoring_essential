@@ -68,7 +68,7 @@ public class OrderTests
     [Test]
     public void Summarise_ThrowsException_WhenItemsIsNull()
     {
-        var order = new Order(null, new Customer(false));
+        var order = new Order(new OrderItems(null), new Customer(false));
 
         var ex = Assert.Throws<InvalidOperationException>(
             () => order.Summarise());

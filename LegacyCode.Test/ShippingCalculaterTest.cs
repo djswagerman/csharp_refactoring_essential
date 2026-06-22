@@ -16,6 +16,8 @@ public class LegacyCalculatorTests
     [Fact] void CanGetOrder()
     {
         var orderClient = new OrderClient(new HttpClient());
+        var order1001 = orderClient.getOrderData(1001);
+        
         var calculator = new ShippingCalculator();
     }
 }

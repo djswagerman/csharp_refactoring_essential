@@ -5,14 +5,13 @@ using NUnit.Framework;
 [TestFixture]
 public class PriceCalculatorTests
 {
-    private readonly PriceCalculator calculator = new PriceCalculator();
 
     [Test]
     public void ShouldApplyDiscountWhenProductIsOnSale()
     {
         Product product = new Product(100.0, true);
 
-        double result = calculator.CalculateFinalPrice(product);
+        double result = product.CalculateFinalPrice();
 
         Assert.That(result, Is.EqualTo(80.0));
     }
@@ -22,7 +21,7 @@ public class PriceCalculatorTests
     {
         Product product = new Product(100.0, false);
 
-        double result = calculator.CalculateFinalPrice(product);
+        double result = product.CalculateFinalPrice();
 
         Assert.That(result, Is.EqualTo(100.0));
     }
@@ -32,7 +31,7 @@ public class PriceCalculatorTests
     {
         Product product = new Product(0.0, true);
 
-        double result = calculator.CalculateFinalPrice(product);
+        double result = product.CalculateFinalPrice();
 
         Assert.That(result, Is.EqualTo(0.0));
     }

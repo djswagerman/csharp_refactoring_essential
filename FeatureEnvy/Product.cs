@@ -1,16 +1,7 @@
 ﻿namespace FeatureEnvy;
 
-public class Product
+public class Product(double price, bool onSale)
 {
-    private readonly double price;
-    private readonly bool onSale;
-
-    public Product(double price, bool onSale)
-    {
-        this.price = price;
-        this.onSale = onSale;
-    }
-
     public double GetPrice()
     {
         return price;
@@ -19,5 +10,17 @@ public class Product
     public bool IsOnSale()
     {
         return onSale;
+    }
+
+    public double CalculateFinalPrice()
+    {
+        double finalPrice = this.GetPrice();
+
+        if (this.IsOnSale())
+        {
+            finalPrice = finalPrice * 0.8;
+        }
+
+        return finalPrice;
     }
 }

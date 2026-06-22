@@ -1,4 +1,5 @@
 namespace LegacyCode.Test;
+using System.Text.Json.Serialization;
 
 public class LegacyCalculatorTests
 {
@@ -10,5 +11,11 @@ public class LegacyCalculatorTests
 
         // Assert
         Assert.NotNull(calculator);
+    }
+    
+    [Fact] void CanGetOrder()
+    {
+        var orderClient = new OrderClient(new HttpClient());
+        var calculator = new ShippingCalculator();
     }
 }

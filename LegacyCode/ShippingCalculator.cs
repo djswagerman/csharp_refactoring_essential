@@ -2,10 +2,9 @@
 
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class Order
+public class OrderData
 {
     public int OrderId { get; set; }
     public string? ShippingType { get; set; }
@@ -17,12 +16,18 @@ public class Order
 public class ShippingCalculator
 {
     private readonly HttpClient _httpClient = new HttpClient();
+    private readonly OrderClient _orderClient;
+
+    public ShippingCalculator()
+    {
+        _orderClient = new OrderClient(_httpClient);
+    }
 
     public double CalculateShipping(int orderId)
     {
         try
         {
-            var order = getOrderData(orderId);
+            var order = _orderClient.getOrderData(orderId);
 
             switch (order.ShippingType)
             {
@@ -45,34 +50,6 @@ public class ShippingCalculator
             Console.WriteLine(e);
             return -1;
         }
-    }
-
-    private Order? getOrderData(int orderId)
-    {
-        var url = $"https://codemanship.co.uk/api/orders.php?orderId={orderId}";
-
-        var response = _httpClient
-            .GetAsync(url)
-            .GetAwaiter()
-            .GetResult();
-
-        response.EnsureSuccessStatusCode();
-
-        var json = response.Content
-            .ReadAsStringAsync()
-            .GetAwaiter()
-            .GetResult();
-
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-            
-        var order = JsonSerializer.Deserialize<Order>(json, options);
-
-        if (order == null)
-            throw new Exception("Failed to deserialize order");
-        return order;
     }
 }
 

@@ -1,24 +1,30 @@
 ﻿namespace LongMethod;
 
-using System;
 using System.Collections.Generic;
 
 public class Order
 {
-    private readonly List<OrderItem> _items;
+    internal readonly List<OrderItem> _items;
     private readonly Customer _customer;
+    private readonly OrderItems _orderItems;
 
     public Order(List<OrderItem> items, Customer customer)
     {
         _items = items;
         _customer = customer;
+        _orderItems = new OrderItems(this);
+    }
+
+    public List<OrderItem> Items
+    {
+        get { return _items; }
     }
 
     public OrderSummary Summarise()
     {
-        validateOrder();
+        _orderItems.ValidateOrder(this);
 
-        var subtotal = calculateSubtotal();
+        var subtotal = _orderItems.CalculateSubtotal();
 
         var discount = calculateDiscount(subtotal);
 
@@ -58,32 +64,6 @@ public class Order
         }
 
         return discount;
-    }
-
-    private double calculateSubtotal()
-    {
-        // Subtotal calculation
-        double subtotal = 0.0;
-        foreach (var item in _items)
-        {
-            subtotal += item.Price * item.Quantity;
-        }
-
-        return subtotal;
-    }
-
-    private void validateOrder()
-    {
-        // Validation
-        if (_items == null)
-        {
-            throw new InvalidOperationException("Items cannot be null");
-        }
-
-        if (_items.Count == 0)
-        {
-            throw new InvalidOperationException("Order must contain items");
-        }
     }
 }
 

@@ -7,7 +7,6 @@ public class ShippingCalculator
 {
     public double CalculateShipping(OrderData orderData)
     {
-        var orderId = orderData.OrderId;
         try
         {
             switch (orderData.ShippingType)

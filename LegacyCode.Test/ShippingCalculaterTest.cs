@@ -1,3 +1,5 @@
+using System.ComponentModel.Design;
+
 namespace LegacyCode.Test;
 using System.Text.Json.Serialization;
 
@@ -22,5 +24,66 @@ public class CalculatorTests
 
         // Assert
         Assert.NotNull(calculator);
+    }
+
+    [Fact]
+    public void ShippingCalculator_CreatePricingStrategy()
+
+    {
+        var standardPricing = PricingStrategyFactory.Create(Shipping.Standard);
+        Assert.NotNull(standardPricing);
+        
+        var expressPricing = PricingStrategyFactory.Create(Shipping.Express);
+        Assert.NotNull(expressPricing);
+        
+        var overnightPricing = PricingStrategyFactory.Create(Shipping.Overnight);
+        Assert.NotNull(overnightPricing);
+        
+        var internationalPricing = PricingStrategyFactory.Create(Shipping.International);
+        Assert.NotNull(internationalPricing);
+    }
+
+
+    [Fact]
+    public void ShippingCalculator_StandardPricingStrategy()
+    {
+        var standardPricing = PricingStrategyFactory.Create(Shipping.Standard);
+        Assert.NotNull(standardPricing);
+
+        var weight = 5;
+        var distance = 120;
+        
+        var expectedStandardPricing = weight * 0.5;
+        var calculatedStandardPricing = standardPricing.CalculatePrice(weight, distance);
+        
+        Assert.Equal(expectedStandardPricing, calculatedStandardPricing);
+    }
+
+    [Fact]
+    public void ShippingCalculator_ExpressPricingStrategy()
+    {
+        var expressPricing = PricingStrategyFactory.Create(Shipping.Express);
+        Assert.NotNull(expressPricing);
+        var weight = 5;
+        var distance = 120;
+
+        var expectedPricing = weight * 0.8 + distance * 0.1;
+        var calculatedPricing = expressPricing.CalculatePrice(weight, distance);
+        
+        Assert.Equal(expectedPricing, calculatedPricing);
+    }
+    
+    [Fact]
+    public void ShippingCalculator_OvernightPricingStrategy()
+    {
+        var overnightPricing = PricingStrategyFactory.Create(Shipping.Overnight);
+        Assert.NotNull(overnightPricing);
+        var weight = 5;
+        var distance = 120;
+
+        var expectedOvernightPricing = weight * 1.2 + 25;
+        var calculatedOvernightPricing = overnightPricing.CalculatePrice(weight, distance);
+        
+        Assert.Equal(expectedOvernightPricing, calculatedOvernightPricing);
     }
 }

@@ -53,10 +53,10 @@ public class CalculatorTests
         var weight = 5;
         var distance = 120;
         
-        var expectedStandardPricing = weight * 0.5;
-        var calculatedStandardPricing = standardPricing.CalculatePrice(weight, distance);
+        var expectedPricing = weight * 0.5;
+        var calculatedPricing = standardPricing.CalculatePrice(weight, distance);
         
-        Assert.Equal(expectedStandardPricing, calculatedStandardPricing);
+        Assert.Equal(expectedPricing, calculatedPricing);
     }
 
     [Fact]
@@ -81,9 +81,24 @@ public class CalculatorTests
         var weight = 5;
         var distance = 120;
 
-        var expectedOvernightPricing = weight * 1.2 + 25;
-        var calculatedOvernightPricing = overnightPricing.CalculatePrice(weight, distance);
+        var expectedPricing = weight * 1.2 + 25;
+        var calculatedPricing = overnightPricing.CalculatePrice(weight, distance);
         
-        Assert.Equal(expectedOvernightPricing, calculatedOvernightPricing);
+        Assert.Equal(expectedPricing, calculatedPricing);
+        
+    }
+    
+    [Fact]
+    public void ShippingCalculator_InternationalPricingStrategy()
+    {
+        var internationalPricing = PricingStrategyFactory.Create(Shipping.International);
+        Assert.NotNull(internationalPricing);
+        var weight = 5;
+        var distance = 120;
+
+        var expectedPricing = weight * 1.5;
+        var calculatedPricing = internationalPricing.CalculatePrice(weight, distance);
+        
+        Assert.Equal(expectedPricing, calculatedPricing);
     }
 }

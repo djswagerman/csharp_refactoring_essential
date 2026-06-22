@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 public class Order
 {
     public int OrderId { get; set; }
-    public string ShippingType { get; set; }
+    public string? ShippingType { get; set; }
     public double WeightKg { get; set; }
     public double DistanceKm { get; set; }
     public bool Fragile { get; set; }

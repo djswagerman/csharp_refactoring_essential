@@ -14,7 +14,7 @@ public class PriceCalculatorTests
 
         double result = calculator.CalculateFinalPrice(product);
 
-        Assert.AreEqual(80.0, result);
+        Assert.That(result, Is.EqualTo(80.0));
     }
 
     [Test]
@@ -24,7 +24,7 @@ public class PriceCalculatorTests
 
         double result = calculator.CalculateFinalPrice(product);
 
-        Assert.AreEqual(100.0, result);
+        Assert.That(result, Is.EqualTo(100.0));
     }
 
     [Test]
@@ -34,6 +34,6 @@ public class PriceCalculatorTests
 
         double result = calculator.CalculateFinalPrice(product);
 
-        Assert.AreEqual(0.0, result);
+        Assert.That(result, Is.EqualTo(0.0));
     }
 }

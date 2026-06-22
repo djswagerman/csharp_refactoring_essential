@@ -12,15 +12,15 @@ public class X1Test
         int upperBound = 12;
 
         // Expected: sum of squares from 7 to 12
-        int expected = 0;
+        int expectedSumOfSquares = 0;
         for (int i = lowerBound; i <= upperBound; i++)
         {
-            expected += i * i;
+            expectedSumOfSquares += i * i;
         }
 
         var range = new Range(lowerBound, upperBound);
-        int actual = X1.SumOfSquares(range);
+        int actualSumOfSquares = X1.SumOfSquares(range);
 
-        Assert.That(actual, Is.EqualTo(expected));
+        Assert.That(actualSumOfSquares, Is.EqualTo(expectedSumOfSquares));
     }
 }

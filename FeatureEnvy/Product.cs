@@ -1,26 +1,33 @@
 ﻿namespace FeatureEnvy;
 
-public class Product(double price, bool onSale)
+public class Product
 {
-    public double GetPrice()
+    private double _price;
+    private bool _isDiscounted;
+    
+    public Product(double price, bool isDiscounted)
     {
-        return price;
+        _price = price;
+        _isDiscounted = isDiscounted;
     }
 
-    public bool IsOnSale()
+    private bool IsDiscounted()
     {
-        return onSale;
+        return _isDiscounted;
     }
 
-    public double CalculateFinalPrice()
+    public double FinalPrice
     {
-        double finalPrice = this.GetPrice();
-
-        if (this.IsOnSale())
+        get
         {
-            finalPrice = finalPrice * 0.8;
-        }
+            double finalPrice = this._price;
 
-        return finalPrice;
+            if (this.IsDiscounted())
+            {
+                finalPrice = finalPrice * 0.8;
+            }
+
+            return finalPrice;
+        }
     }
 }

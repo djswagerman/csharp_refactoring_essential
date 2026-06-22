@@ -23,10 +23,15 @@ public class ShippingApp
 
         try
         {
-            double cost = calculator.CalculateShipping(new InClassName(orderId));
+            var orderClient = new OrderClient(new HttpClient());
+            var orderData = orderClient.getOrderData(orderId);
+            if (orderData != null)
+            {
+                double cost = calculator.CalculateShipping(orderData);
 
-            Console.WriteLine($"OrderData ID: {orderId}");
-            Console.WriteLine($"Shipping cost: {cost}");
+                Console.WriteLine($"OrderData ID: {orderId}");
+                Console.WriteLine($"Shipping cost: {cost}");
+            }
         }
         catch (Exception e)
         {

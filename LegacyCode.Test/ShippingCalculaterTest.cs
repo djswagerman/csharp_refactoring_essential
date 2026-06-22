@@ -16,6 +16,8 @@ public class OrderClientTest
 
 public class CalculatorTests
 {
+    private readonly PricingStrategyTest _pricingStrategyTest = new PricingStrategyTest();
+
     [Fact]
     public void ShippingCalculator_CanBeInstantiated()
     {
@@ -27,79 +29,33 @@ public class CalculatorTests
     }
 
     [Fact]
-    public void ShippingCalculator_CreatePricingStrategy()
-
+    public void ShippingCalculator_CalculateStandardPricing()
     {
-        var standardPricing = PricingStrategyFactory.Create(Shipping.Standard);
-        Assert.NotNull(standardPricing);
+        var calculator = new ShippingCalculator();
+        var orderData = new OrderData();
+            
+        orderData.ShippingType = "STANDARD";
+        orderData.WeightKg = 5;
+        orderData.DistanceKm = 120;
         
-        var expressPricing = PricingStrategyFactory.Create(Shipping.Express);
-        Assert.NotNull(expressPricing);
-        
-        var overnightPricing = PricingStrategyFactory.Create(Shipping.Overnight);
-        Assert.NotNull(overnightPricing);
-        
-        var internationalPricing = PricingStrategyFactory.Create(Shipping.International);
-        Assert.NotNull(internationalPricing);
-    }
-
-
-    [Fact]
-    public void ShippingCalculator_StandardPricingStrategy()
-    {
-        var standardPricing = PricingStrategyFactory.CreateForShippingType("STANDARD");
-        
-        Assert.NotNull(standardPricing);
-
-        var weight = 5;
-        var distance = 120;
-        
-        var expectedPricing = weight * 0.5;
-        var calculatedPricing = standardPricing.CalculatePrice(weight, distance);
-        
-        Assert.Equal(expectedPricing, calculatedPricing);
-    }
-
-    [Fact]
-    public void ShippingCalculator_ExpressPricingStrategy()
-    {
-        var expressPricing = PricingStrategyFactory.CreateForShippingType("EXPRESS");
-        Assert.NotNull(expressPricing);
-        var weight = 5;
-        var distance = 120;
-
-        var expectedPricing = weight * 0.8 + distance * 0.1;
-        var calculatedPricing = expressPricing.CalculatePrice(weight, distance);
+        var expectedPricing = orderData.WeightKg * 0.5;
+        var calculatedPricing = calculator.CalculateShipping(orderData);
         
         Assert.Equal(expectedPricing, calculatedPricing);
     }
     
     [Fact]
-    public void ShippingCalculator_OvernightPricingStrategy()
+    public void ShippingCalculator_CalculateExpressPricing()
     {
-        var overnightPricing = PricingStrategyFactory.CreateForShippingType("OVERNIGHT");
-        Assert.NotNull(overnightPricing);
-        var weight = 5;
-        var distance = 120;
-
-        var expectedPricing = weight * 1.2 + 25;
-        var calculatedPricing = overnightPricing.CalculatePrice(weight, distance);
+        var calculator = new ShippingCalculator();
+        var orderData = new OrderData();
+            
+        orderData.ShippingType = "EXPRESS";
+        orderData.WeightKg = 5;
+        orderData.DistanceKm = 120;
         
-        Assert.Equal(expectedPricing, calculatedPricing);
-        
-    }
-    
-    [Fact]
-    public void ShippingCalculator_InternationalPricingStrategy()
-    {
-        var internationalPricing = PricingStrategyFactory.CreateForShippingType("INTERNATIONAL");
-        Assert.NotNull(internationalPricing);
-        
-        var weight = 5;
-        var distance = 120;
-
-        var expectedPricing = weight * 1.5;
-        var calculatedPricing = internationalPricing.CalculatePrice(weight, distance);
+        var expectedPricing = orderData.WeightKg * 0.8 + orderData.DistanceKm * 0.1;
+        var calculatedPricing = calculator.CalculateShipping(orderData);
         
         Assert.Equal(expectedPricing, calculatedPricing);
     }

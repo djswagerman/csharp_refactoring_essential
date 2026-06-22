@@ -16,6 +16,17 @@ public class Address
     public string City { get; }
     public string Postcode { get; }
     public string Country { get; }
+
+    public static string formatAddress(string addressLine1, string addressLine2, string city, string postcode,
+        string country)
+    {
+        string address = addressLine1 + ", "
+                                      + (addressLine2 != null ? addressLine2 + ", " : "")
+                                      + city + ", "
+                                      + postcode + ", "
+                                      + country;
+        return address;
+    }
 }
 
 public class Customer
@@ -50,29 +61,13 @@ public class ShippingNoteGenerator
     public string GenerateShippingNote(Customer customer, Order order
     )
     {
-        var orderId = order.OrderId;
-        var itemDescription = order.ItemDescription;
-        var quantity = order.Quantity;
-        var customerFirstName = customer.CustomerFirstName;
-        var customerLastName = customer.CustomerLastName;
-        var addressLine1 = customer.Address.AddressLine1;
-        var addressLine2 = customer.Address.AddressLine2;
-        var city = customer.Address.City;
-        var postcode = customer.Address.Postcode;
-        var country = customer.Address.Country;
-        string fullName = customerFirstName + " " + customerLastName;
-
-        string address = addressLine1 + ", "
-                                      + (addressLine2 != null ? addressLine2 + ", " : "")
-                                      + city + ", "
-                                      + postcode + ", "
-                                      + country;
+        var address = Address.formatAddress(customer.Address.AddressLine1, customer.Address.AddressLine2, customer.Address.City, customer.Address.Postcode, customer.Address.Country);
 
         return "SHIPPING NOTE\n"
-               + "Order: " + orderId + "\n"
-               + "Customer: " + fullName + "\n"
+               + "Order: " + order.OrderId + "\n"
+               + "Customer: " + (customer.CustomerFirstName + " " + customer.CustomerLastName) + "\n"
                + "Ship To: " + address + "\n"
-               + "Item: " + itemDescription + "\n"
-               + "Quantity: " + quantity;
+               + "Item: " + order.ItemDescription + "\n"
+               + "Quantity: " + order.Quantity;
     }
 }

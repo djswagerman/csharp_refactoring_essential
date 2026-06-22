@@ -15,7 +15,7 @@ public class Order
 
     public OrderSummary Summarise()
     {
-        _orderItems.ValidateOrder(this);
+        _orderItems.Validate();
 
         var subtotal = _orderItems.CalculateSubtotal();
 

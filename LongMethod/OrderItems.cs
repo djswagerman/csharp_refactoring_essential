@@ -1,19 +1,12 @@
 namespace LongMethod;
 
-public class OrderItems
+public class OrderItems(List<OrderItem> orderItems)
 {
-    private List<OrderItem> _items;
-
-    public OrderItems(List<OrderItem> orderItems)
-    {
-        _items = orderItems;
-    }
-
     internal double CalculateSubtotal()
     {
         // Subtotal calculation
         double subtotal = 0.0;
-        foreach (var item in _items)
+        foreach (var item in orderItems)
         {
             subtotal += item.Price * item.Quantity;
         }
@@ -21,15 +14,15 @@ public class OrderItems
         return subtotal;
     }
 
-    public void ValidateOrder(Order order)
+    public void Validate()
     {
         // Validation
-        if (_items == null)
+        if (orderItems == null)
         {
             throw new InvalidOperationException("Items cannot be null");
         }
 
-        if (_items.Count == 0)
+        if (orderItems.Count == 0)
         {
             throw new InvalidOperationException("Order must contain items");
         }

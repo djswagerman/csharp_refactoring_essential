@@ -14,7 +14,7 @@ public class CustomerServiceTest
     [Test]
     public void IsValidEmail_shouldReturnFalse_whenEmailIsNull()
     {
-        Assert.IsFalse(service.IsValidEmail(null));
+        Assert.IsFalse(service.IsValidEmail((string?)null));
     }
 
     [Test]
@@ -61,21 +61,21 @@ public class CustomerServiceTest
     public void FormatDisplayName_shouldTrimAndUppercaseLastName()
     {
         string result = service.FormatDisplayName(" John ", " smith ");
-        Assert.AreEqual("John SMITH", result);
+        Assert.That(result, Is.EqualTo("John SMITH"));
     }
 
     [Test]
     public void FormatDisplayName_shouldHandleEmptyStrings()
     {
         string result = service.FormatDisplayName("", "");
-        Assert.AreEqual(" ", result);
+        Assert.That(result, Is.EqualTo(" "));
     }
 
     [Test]
     public void FormatDisplayName_shouldHandleSingleCharacterNames()
     {
         string result = service.FormatDisplayName("A", "b");
-        Assert.AreEqual("A B", result);
+        Assert.That(result, Is.EqualTo("A B"));
     }
 
     // -------------------------
@@ -85,25 +85,25 @@ public class CustomerServiceTest
     [Test]
     public void CalculateLoyaltyPoints_shouldReturnZero_whenNoPurchases()
     {
-        Assert.AreEqual(0, service.CalculateLoyaltyPoints(0));
+        Assert.That(service.CalculateLoyaltyPoints(0), Is.EqualTo(0));
     }
 
     [Test]
     public void CalculateLoyaltyPoints_shouldCalculateCorrectly_forPositiveValues()
     {
-        Assert.AreEqual(50, service.CalculateLoyaltyPoints(5));
+        Assert.That(service.CalculateLoyaltyPoints(5), Is.EqualTo(50));
     }
 
     [Test]
     public void CalculateLoyaltyPoints_shouldHandleLargeNumbers()
     {
-        Assert.AreEqual(100_000, service.CalculateLoyaltyPoints(10_000));
+        Assert.That(service.CalculateLoyaltyPoints(10_000), Is.EqualTo(100_000));
     }
 
     [Test]
     public void CalculateLoyaltyPoints_shouldAllowNegativeValues_butStillMultiply()
     {
-        Assert.AreEqual(-50, service.CalculateLoyaltyPoints(-5));
+        Assert.That(service.CalculateLoyaltyPoints(-5), Is.EqualTo(-50));
     }
 
     // -------------------------
@@ -113,25 +113,25 @@ public class CustomerServiceTest
     [Test]
     public void DetermineAccountStatus_shouldReturnInactive_whenDaysOver365()
     {
-        Assert.AreEqual("INACTIVE", service.DetermineAccountStatus(366));
+        Assert.That(service.DetermineAccountStatus(366), Is.EqualTo("INACTIVE"));
     }
 
     [Test]
     public void DetermineAccountStatus_shouldReturnDormant_whenBetween31And365()
     {
-        Assert.AreEqual("DORMANT", service.DetermineAccountStatus(100));
+        Assert.That(service.DetermineAccountStatus(100), Is.EqualTo("DORMANT"));
     }
 
     [Test]
     public void DetermineAccountStatus_shouldReturnActive_when30DaysOrLess()
     {
-        Assert.AreEqual("ACTIVE", service.DetermineAccountStatus(30));
-        Assert.AreEqual("ACTIVE", service.DetermineAccountStatus(0));
+        Assert.That(service.DetermineAccountStatus(30), Is.EqualTo("ACTIVE"));
+        Assert.That(service.DetermineAccountStatus(0), Is.EqualTo("ACTIVE"));
     }
 
     [Test]
     public void DetermineAccountStatus_shouldTreatNegativeDaysAsActive()
     {
-        Assert.AreEqual("ACTIVE", service.DetermineAccountStatus(-10));
+        Assert.That(service.DetermineAccountStatus(-10), Is.EqualTo("ACTIVE"));
     }
 }

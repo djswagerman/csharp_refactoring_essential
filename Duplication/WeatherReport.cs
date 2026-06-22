@@ -10,19 +10,25 @@ public class WeatherReport
     {
         foreach (Forecast forecast in forecasts)
         {
-            string label = forecast.Period switch
-            {
-                Period.Morning => "Morning",
-                Period.Afternoon => "Afternoon",
-                Period.Evening => "Evening",
-                Period.Night => "Night",
-                _ => "Unknown",
-            };
+            var label = GetPeriodLabel(forecast);
 
             string line = label + ": " + forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C, "
                           + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
             output.Add(line);
         }
+    }
+
+    private static string GetPeriodLabel(Forecast forecast)
+    {
+        string label = forecast.Period switch
+        {
+            Period.Morning => "Morning",
+            Period.Afternoon => "Afternoon",
+            Period.Evening => "Evening",
+            Period.Night => "Night",
+            _ => "Unknown",
+        };
+        return label;
     }
 }
 

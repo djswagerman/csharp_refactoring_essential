@@ -10,23 +10,14 @@ public class WeatherReport
     {
         foreach (Forecast forecast in forecasts)
         {
-            string line =  GetPeriodLabel(forecast) + ": " + forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C, "
-                          + forecast.GetCondition() + ", wind " + forecast.GetWindSpeed() + "km/h";
+            string periodLabel = forecast.GetPeriodLabel();
+            string temperature = forecast.GetTemperature().ToString("0.0", CultureInfo.InvariantCulture) + "°C";
+            string condition = forecast.GetCondition();
+            string windSpeed = "wind " + forecast.GetWindSpeed().ToString("0", CultureInfo.InvariantCulture) + "km/h";;
+            
+            string line =  periodLabel + ": " + temperature + ", " + condition + ", " + windSpeed;
             output.Add(line);
         }
-    }
-
-    private static string GetPeriodLabel(Forecast forecast)
-    {
-        string label = forecast.Period switch
-        {
-            Period.Morning => "Morning",
-            Period.Afternoon => "Afternoon",
-            Period.Evening => "Evening",
-            Period.Night => "Night",
-            _ => "Unknown",
-        };
-        return label;
     }
 }
 
@@ -61,6 +52,19 @@ public class Forecast
     }
 
     public Period Period => period;
+
+    public string GetPeriodLabel()
+    {
+        string label = period switch
+        {
+            Period.Morning => "Morning",
+            Period.Afternoon => "Afternoon",
+            Period.Evening => "Evening",
+            Period.Night => "Night",
+            _ => "Unknown",
+        };
+        return label;
+    }
 }
 
 public enum Period

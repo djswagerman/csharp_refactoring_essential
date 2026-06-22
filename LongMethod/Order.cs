@@ -4,20 +4,13 @@ using System.Collections.Generic;
 
 public class Order
 {
-    internal readonly List<OrderItem> _items;
     private readonly Customer _customer;
     private readonly OrderItems _orderItems;
 
-    public Order(List<OrderItem> items, Customer customer)
+    public Order(OrderItems orderItems, Customer customer)
     {
-        _items = items;
         _customer = customer;
-        _orderItems = new OrderItems(this);
-    }
-
-    public List<OrderItem> Items
-    {
-        get { return _items; }
+        _orderItems = orderItems;
     }
 
     public OrderSummary Summarise()

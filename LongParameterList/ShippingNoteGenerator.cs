@@ -1,23 +1,14 @@
 ﻿namespace LongParameterList;
 
-public class Address
+public class Address(string addressLine1, string addressLine2, string city, string postcode, string country)
 {
-    public Address(string addressLine1, string addressLine2, string city, string postcode, string country)
-    {
-        AddressLine1 = addressLine1;
-        AddressLine2 = addressLine2;
-        City = city;
-        Postcode = postcode;
-        Country = country;
-    }
+    private string AddressLine1 { get; } = addressLine1;
+    private string AddressLine2 { get; } = addressLine2;
+    private string City { get; } = city;
+    private string Postcode { get; } = postcode;
+    private string Country { get; } = country;
 
-    public string AddressLine1 { get; }
-    public string AddressLine2 { get; }
-    public string City { get; }
-    public string Postcode { get; }
-    public string Country { get; }
-
-    public static string formatAddress(string addressLine1, string addressLine2, string city, string postcode,
+    private static string FormatAddress(string addressLine1, string addressLine2, string city, string postcode,
         string country)
     {
         string address = addressLine1 + ", "
@@ -28,7 +19,7 @@ public class Address
         return address;
     }
 
-    public string Addres => formatAddress (AddressLine1, AddressLine2, City, Postcode, Country);
+    public string Addres => FormatAddress (AddressLine1, AddressLine2, City, Postcode, Country);
 }
 
 public class Customer
@@ -60,8 +51,7 @@ public class Order(string orderId, string itemDescription, int quantity)
 
 public class ShippingNoteGenerator
 {
-    public string GenerateShippingNote(Customer customer, Order order
-    )
+    public string GenerateShippingNote(Customer customer, Order order)
     {
         return "SHIPPING NOTE\n"
                + "Order: " + order.OrderId + "\n"

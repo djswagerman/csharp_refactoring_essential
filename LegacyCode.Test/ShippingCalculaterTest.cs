@@ -47,7 +47,8 @@ public class CalculatorTests
     [Fact]
     public void ShippingCalculator_StandardPricingStrategy()
     {
-        var standardPricing = PricingStrategyFactory.Create(Shipping.Standard);
+        var standardPricing = PricingStrategyFactory.CreateForShippingType("STANDARD");
+        
         Assert.NotNull(standardPricing);
 
         var weight = 5;
@@ -62,7 +63,7 @@ public class CalculatorTests
     [Fact]
     public void ShippingCalculator_ExpressPricingStrategy()
     {
-        var expressPricing = PricingStrategyFactory.Create(Shipping.Express);
+        var expressPricing = PricingStrategyFactory.CreateForShippingType("EXPRESS");
         Assert.NotNull(expressPricing);
         var weight = 5;
         var distance = 120;
@@ -76,7 +77,7 @@ public class CalculatorTests
     [Fact]
     public void ShippingCalculator_OvernightPricingStrategy()
     {
-        var overnightPricing = PricingStrategyFactory.Create(Shipping.Overnight);
+        var overnightPricing = PricingStrategyFactory.CreateForShippingType("OVERNIGHT");
         Assert.NotNull(overnightPricing);
         var weight = 5;
         var distance = 120;
@@ -91,8 +92,9 @@ public class CalculatorTests
     [Fact]
     public void ShippingCalculator_InternationalPricingStrategy()
     {
-        var internationalPricing = PricingStrategyFactory.Create(Shipping.International);
+        var internationalPricing = PricingStrategyFactory.CreateForShippingType("INTERNATIONAL");
         Assert.NotNull(internationalPricing);
+        
         var weight = 5;
         var distance = 120;
 

@@ -48,4 +48,13 @@ public static class PricingStrategyFactory
         Shipping.Overnight => new OvernightPricing(),
         _ => throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null)
     };
+    
+    public static IPricingStrategy CreateForShippingType(string shippingType) => shippingType switch
+    {
+        "STANDARD" => new StandardPricing(),
+        "EXPRESS" => new ExpressPricing(),
+        "OVERNIGHT" => new OvernightPricing(),
+        "INTERNATIONAL" => new InternationalPricing(),
+        _ => throw new Exception($"Unknown shipping type: {shippingType}")
+    };
 }
